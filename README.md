@@ -1,7 +1,11 @@
 **#NAGP Svelte Assignment: TaskManager Application**
-TaskManager Svelte Application:
+
+**TaskManager Svelte Application:
+**
 Project Links:
+
 GitHub: https://github.com/techlearner-1997/nagp/tree/main
+
 Ui App: https://nagp-three.vercel.app/
 
 So in this project, there are 2 sections:
