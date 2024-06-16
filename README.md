@@ -1,24 +1,24 @@
 **#NAGP Svelte Assignment: TaskManager Application**
 
-**TaskManager Svelte Application:
-**
-Project Links:
+**#TaskManager Svelte Application:**
+**Project Links:**
 
-GitHub: https://github.com/techlearner-1997/nagp/tree/main
+**GitHub**: https://github.com/techlearner-1997/nagp/tree/main
 
-Ui App: https://nagp-three.vercel.app/
+**Ui App:** https://nagp-three.vercel.app/
 
 So in this project, there are 2 sections:
 1.	Task Manager(UI App)
 2.	User Application(BE)
 First download the project at your local or take a pull.
 Goto the path where pom.xml is present as you can see below and execute below command :
-mvn clean install
+
+**mvn clean install**
  ![image](https://github.com/techlearner-1997/nagp/assets/73772979/8a910a31-ebe1-46e2-82dd-0265087e5d75)
 
 This will generate a jar file of application at target folder.
 Then execute below command to locally run the application:
-java -jar target\user-0.0.1-SNAPSHOT.jar
+**java -jar target\user-0.0.1-SNAPSHOT.jar**
 
  ![image](https://github.com/techlearner-1997/nagp/assets/73772979/072f1617-c775-4ad7-a04e-0466979d8d1b)
 
@@ -26,7 +26,7 @@ java -jar target\user-0.0.1-SNAPSHOT.jar
 
 Now BE is up.
 Now you can use the frontend code deployed in vercel using the below URL:
-https://nagp-three.vercel.app/
+**https://nagp-three.vercel.app/**
  ![image](https://github.com/techlearner-1997/nagp/assets/73772979/17888c6b-3e98-48ca-906a-c79c6c0be882)
 Steps to use the website:
 1.	Sign up yourself and then login.
