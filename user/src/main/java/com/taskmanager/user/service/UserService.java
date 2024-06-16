@@ -35,7 +35,7 @@ public class UserService {
     public void createUser(User user){
         log.info("Creating User");
         validator.isValidPhone(user.getPhone());
-        Optional<User> existingUser = users.stream().filter(x -> x.getPhone().equalsIgnoreCase(user.getPhone())).findAny();
+        Optional<User> existingUser = users.stream().filter(x -> x.getEmail().equalsIgnoreCase(user.getEmail())).findAny();
         if(existingUser.isPresent()){
             throw new BusinessException("EXISTING_USER","User already available");
         }
