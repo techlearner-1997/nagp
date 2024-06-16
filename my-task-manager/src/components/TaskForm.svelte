@@ -17,14 +17,13 @@
     let newTask={ title: title, description: description, category: category, dueDate: dueDate, status: status,userId:userId }
           await addTask(newTask);
           alert('Task Created Successfully');
+          title = '';
+          category = '';
+          description = '';
+          dueDate = '';
+          status = 'Pending';
       }
-
-      // Reset form fields after task creation or update
-      title = '';
-      category = '';
-      description = '';
-      dueDate = '';
-      status = 'Pending';
+      
 
 </script>
 

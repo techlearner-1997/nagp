@@ -10,7 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://nagp-1vbl.vercel.app","https://nagp-three.vercel.app/") // Replace with your frontend URL
+                .allowedOrigins("https://nagp-1vbl.vercel.app","https://nagp-three.vercel.app/","http://localhost:5173/" +
+                        "") // Replace with your frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
