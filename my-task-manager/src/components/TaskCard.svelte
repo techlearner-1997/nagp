@@ -1,12 +1,11 @@
 <script lang="ts">
   import { deleteTask, updateTask } from '../stores/taskStore';
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
 
   export let task: any;
 
   let editing = false;
-  let updatedTask = { ...task }; // Copy of the task to edit
+  let updatedTask = { ...task };
 
   function formatDate(dateStr: string) {
       const date = new Date(dateStr);
@@ -28,7 +27,6 @@
           task={ ...updateTask}
       } catch (error) {
           console.error('Error updating task:', error);
-          // Handle error (show message, etc.)
       }
   }
 
@@ -62,7 +60,11 @@
           <input type="text" id="title" bind:value={updatedTask.title} />
 
           <label for="category">Category:</label>
-          <input type="text" id="category" bind:value={updatedTask.category} />
+          <select id="category" bind:value={updatedTask.category}>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="urgent">Urgent</option>
+          </select>
 
           <label for="description">Description:</label>
           <textarea id="description" bind:value={updatedTask.description}></textarea>
@@ -73,8 +75,8 @@
           <label for="status">Status:</label>
           <select id="status" bind:value={updatedTask.status}>
               <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
-              <!-- Add more status options as needed -->
           </select>
 
           <div>

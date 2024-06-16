@@ -1,5 +1,5 @@
-<script>
-  export let user;
+<script lang=ts>
+  export let user:any;
 </script>
 <div class="user-profile">
   

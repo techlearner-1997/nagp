@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 @Service
 public class TaskService {
+    private static final AtomicLong taskIdSequencer = new AtomicLong(0);
     public static final String USER_NOT_AVAILABLE = "USER_NOT_AVAILABLE";
     public static final String USER_NOT_REGISTERED = "User not registered";
     private final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -24,18 +26,10 @@ public class TaskService {
     @Autowired
     private UserValidation validator;
 
-    @PostConstruct
-    public void init() {
-        // Add default data
-        tasks.add(new Task(1L, "Gym", "Go to gym regular for 1 month", "personal", "", "PENDING", "9998887776"));
-        tasks.add(new Task(2L, "Gym", "Go to gym regular for 1 week", "personal", "", "PENDING", "9998887775"));
-        tasks.add(new Task(3L, "Yoga", "Go to yoga regular for 1 week", "personal", "", "PENDING", "9998887774"));
-
-    }
 
     public Task addTask(Task task) {
         log.info("Creating task for user {}", task.getUserId());
-        task.setId(tasks.size() + 1L);
+        task.setId(generateTaskId());
         tasks.add(task);
         return task;
     }
@@ -76,5 +70,8 @@ public class TaskService {
     public List<Task> getAllTasksByCategory(String userId, String category) {
         log.info("Getting tasks for user {} ", userId);
         return tasks.stream().filter(x -> x.getUserId().equalsIgnoreCase(userId) && x.getCategory().equalsIgnoreCase(category)).collect(Collectors.toList());
+    }
+    private Long generateTaskId() {
+        return taskIdSequencer.incrementAndGet(); // Increment the sequencer and return the new ID
     }
 }

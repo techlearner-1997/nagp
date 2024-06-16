@@ -2,19 +2,22 @@ import { writable } from 'svelte/store';
 
 // Create a writable store
 export const taskStore = writable([]);
+export const loadingStore = writable(false);
 
 // Load JWT and userId from sessionStorage
+
 const jwtToken = sessionStorage.getItem('jwtToken');
 const userId =sessionStorage.getItem('userId');
 
-// Function to fetch tasks from the server and update the store
+
+
 export async function fetchTasks() {
     if (!jwtToken || !userId) {
         console.log(jwtToken)
         console.error('JWT token or userId not found in sessionStorage');
         return;
     }
-
+    loadingStore.set(true);
     try {
         const response = await fetch(`http://localhost:8080/tasks/getAllTasks?userId=${userId}`, {
             method: 'GET',
@@ -34,6 +37,9 @@ export async function fetchTasks() {
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
+    finally {
+        loadingStore.set(false);
+      }
 }
 
 export async function fetchTasksByCategory(category) {
@@ -53,8 +59,6 @@ export async function fetchTasksByCategory(category) {
 
         if (response.ok) {
             const tasks = await response.json();
-            // taskStore.set(tasks);
-            // saveTasksToSessionStorage(tasks);
             return tasks
         } else {
             console.error('Fetch failed with status:', response.status);
@@ -82,8 +86,12 @@ export async function addTask(newTask) {
 
         if (response.ok) {
             const createdTask = await response.json();
-            taskStore.update(tasks => [...tasks, createdTask]);
-            saveTasksToSessionStorage([...get(taskStore)]);
+            // taskStore.update(tasks => [...tasks, createdTask]);
+            // saveTasksToSessionStorage([...tasks, createdTask]);
+            taskStore.update(tasks => {
+                saveTasksToSessionStorage([...tasks, createdTask]);
+                return [...tasks, createdTask];
+            });
         } else {
             console.error('Failed to add task with status:', response.status);
         }
@@ -112,18 +120,12 @@ export async function updateTask(updatedTask) {
                 return newTasks;
             });
         } else {
-            console.error('Failed to add task with status:', response.status);
+            console.error('Failed to update task with status:', response.status);
         }
     } catch (error) {
         console.error('Error adding task:', error);
     }
 }
-    // taskStore.update(tasks => {
-    //     const newTasks = tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
-    //     saveTasksToSessionStorage(newTasks);
-    //     return newTasks;
-    // // });
-// }
 
 // Function to delete a task
 export async function deleteTask(taskId) {

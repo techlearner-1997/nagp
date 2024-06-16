@@ -1,30 +1,22 @@
-<!-- TaskForm.svelte -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { addTask, updateTask } from '../stores/taskStore';
+  import { addTask } from '../stores/taskStore';
 
   export let task = { title: '', description: '', category: '', dueDate: '', status: 'Pending' };
-  export let mode = 'create'; // 'create' or 'edit'
 
   let title = task.title;
   let description = task.description;
   let category = task.category;
   let dueDate = task.dueDate;
   let status = task.status;
-  let jwtToken = sessionStorage.getItem('jwtToken');
   let userId = sessionStorage.getItem('userId');
 
   const dispatch = createEventDispatcher();
 
   async function submitForm() {
-      if (mode === 'create') {
-          const newTask = { title, description, category, dueDate, status, userId };
+    let newTask={ title: title, description: description, category: category, dueDate: dueDate, status: status,userId:userId }
           await addTask(newTask);
           alert('Task Created Successfully');
-      } else if (mode === 'edit') {
-          const updatedTask = { ...task, title, description, category, dueDate, status, userId };
-          await updateTask(updatedTask);
-          alert('Task Updated Successfully');
       }
 
       // Reset form fields after task creation or update
@@ -34,13 +26,10 @@
       dueDate = '';
       status = 'Pending';
 
-      // Optional: Trigger an event to notify parent component of task update
-      dispatch('taskUpdated');
-  }
 </script>
 
 <div class="container">
-  <h1>{mode === 'create' ? 'Create Task' : 'Edit Task'}</h1>
+  <h1>Create Task</h1>
   <section id="create-task">
     <form on:submit|preventDefault={submitForm}>
       <div class="form-group">
@@ -64,7 +53,7 @@
         <input type="date" id="task-due-date" bind:value={dueDate} required />
       </div>
       <div class="form-group">
-        <button type="submit">{mode === 'create' ? 'Create Task' : 'Update Task'}</button>
+        <button type="submit">Create Task</button>
       </div>
     </form>
   </section>
